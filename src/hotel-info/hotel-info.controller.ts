@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { BadRequestException, Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { HotelInfoService } from './hotel-info.service';
 import { HotelDTO, HotelDTO2LCI } from '../DTO/hotel-info.dto';
 import { promises } from 'dns';
@@ -21,11 +21,14 @@ export class HotelInfoController {
   }
 
   @Get('findByLocation')
-  findByLocation(@Query('location') location: string) {
-    return this.hotelInfoService.findHotelByLocation(location)
+  findByLocation(@Query('location') location: string,
+    @Query('date') date?: string,) {
+   {
+    
+    return this.hotelInfoService.findHotelByLocation(location, date);
+  }
   }
 
-  //This wil query based on location and last check in
   @Get('findLateCheckIn')
   findByLateCheckIN(@Query('location') location: string,@Query('date') date: Date) {
     
